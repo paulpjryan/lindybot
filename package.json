@@ -1,0 +1,10 @@
+{
+    "name": "lindybot",
+    "version": "0.0.1",
+    "description": "a dockerized node IRC bot for swing dancing",
+    "main": "bot.js",
+    "author": "paulpjryan@gmail.com",
+    "dependencies": {
+        "irc": "*"
+    }
+}
