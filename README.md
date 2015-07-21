@@ -7,4 +7,5 @@ Just sit back and let it do all the work!
 
 ## Functions
 Welcomes users to the channel
+
 More coming soon
