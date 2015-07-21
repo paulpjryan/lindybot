@@ -6,6 +6,6 @@ lindybot.sh will download the latest source from GitHub, install all the necessa
 Just sit back and let it do all the work!
 
 ## Functions
-Welcomes users to the channel
+1. Welcomes users to the channel
 
 More coming soon
