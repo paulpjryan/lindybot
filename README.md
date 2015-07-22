@@ -10,5 +10,6 @@ You can also run lindybot in a docker container. The dockerfile is included in t
 
 ## Functions
 1. Welcomes users to the channel
+2. Provides useful information to users who may be using IRC for the first time.
 
 More coming soon
