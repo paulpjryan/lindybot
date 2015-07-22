@@ -2,7 +2,7 @@ var irc = require("irc");
 
 var config = {
   //channels: ["#lindybot-test"], 	//debug and test channel
-  channels: ["#swingdancing"], 		//prod channel
+  channels: ["#swingdancing", "#lindybot-test"], 		//prod channel
   server:   "irc.freenode.net",
   botName:  "lindybot"
 };
@@ -12,14 +12,30 @@ var bot = new irc.Client(config.server, config.botName, {
   realName: config.botName
 });
 
-bot.addListener("join", function(channel, nick) {
-  console.log(nick + " joined the channel!");
-  bot.say(channel, "Welcome, " + nick + "!");
-  sendHelp(nick);
+var seenUsers = [config.botName];
+
+bot.addListener("join", function(channel, nick, message){
+	console.log(nick + " joined the channel!");
+	//bot.say(channel, "Welcome, " + nick + "!");
+	//console.log("Host: " + message.host + "\nServer: " + message.server + "\ncommand: " + message.command + "\nRaw Command: " + message.rawCommand + "\nUser: " + message.user + "\nPrefix: " + message.prefix);
+	
+	//only send welcome message to KiwiIRC users
+	if(message.prefix.indexOf("kiwiirc") < 0) {
+		return;
+	}
+
+	//don't send welcome message to users who have been to the channel before
+	for(var i = 0; i < seenUsers.length; i++) {
+		if(seenUsers[i] == nick) {
+			return;
+		}
+	}
+	seenUsers.push(nick);
+	sendHelp(nick);
 });
 
-function isMention(nick, text) {
-	if(text.indexOf("#" > -1 && text.indexOf(nick) > -1)) {
+function isMention(nick, to, text) {
+	if(to.indexOf("#") > -1 && text.indexOf(nick) > -1) {
 		return true;
 	}
 	return false;
@@ -37,7 +53,7 @@ bot.addListener('message', function(nick, to, text, message) {
 		}
 	}
 
-	else if(isMention(config.botName, text)) {
+	else if(isMention(config.botName, to, text)) {
 		console.log("lindybot got a mention");
 	}
 });
